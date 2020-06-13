@@ -24,4 +24,9 @@ public class VehicleController {
     public List<Vehicle> getVehicles() {
         return vehicleService.getVehicles();
     }
+
+    @GetMapping(value = "/{vehicleId}")
+    public Vehicle getVehicle(@PathVariable("vehicleId") String vid) {
+        return vehicleService.getVehicle(vid);
+    }
 }

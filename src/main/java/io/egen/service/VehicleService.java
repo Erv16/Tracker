@@ -9,4 +9,6 @@ public interface VehicleService {
     List<Vehicle> saveVehicle(List<Vehicle> vehicles);
 
     List<Vehicle> getVehicles();
+
+    Vehicle getVehicle(String vid);
 }

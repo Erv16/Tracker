@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class VehicleServiceImpl implements VehicleService {
@@ -26,5 +28,15 @@ public class VehicleServiceImpl implements VehicleService {
     public List<Vehicle> getVehicles() {
 
         return (List<Vehicle>) vehicleRepository.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Vehicle getVehicle(String vid) {
+        Optional<Vehicle> vehicle = vehicleRepository.findById(vid);
+        if(!vehicle.isPresent()) {
+            throw new NoSuchElementException("Vehicle with id " + vid + " does not exist");
+        }
+        return vehicle.get();
     }
 }
