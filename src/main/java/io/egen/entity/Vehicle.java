@@ -16,9 +16,9 @@ public class Vehicle {
 
     private String year;
 
-    private Double redLineRpm;
+    private double redLineRpm;
 
-    private Double maxFuelVolume;
+    private double maxFuelVolume;
 
     private Timestamp lastServiceDate;
 
@@ -54,7 +54,7 @@ public class Vehicle {
         this.year = year;
     }
 
-    public Double getRedLineRpm() {
+    public double getRedLineRpm() {
         return redLineRpm;
     }
 
@@ -62,7 +62,7 @@ public class Vehicle {
         this.redLineRpm = redLineRpm;
     }
 
-    public Double getMaxFuelVolume() {
+    public double getMaxFuelVolume() {
         return maxFuelVolume;
     }
 
