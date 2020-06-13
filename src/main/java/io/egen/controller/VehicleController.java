@@ -1,11 +1,27 @@
 package io.egen.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.egen.entity.Vehicle;
+import io.egen.service.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/vehicles")
-@CrossOrigin(origins = "http://mocker.egen.academy/")
+@CrossOrigin(origins = "http://mocker.egen.academy")
 public class VehicleController {
+
+    @Autowired
+    private VehicleService vehicleService;
+
+    @PutMapping
+    public List<Vehicle> saveVehicle(@RequestBody List<Vehicle> vehicles) {
+        return vehicleService.saveVehicle(vehicles);
+    }
+
+    @GetMapping
+    public List<Vehicle> getVehicles() {
+        return vehicleService.getVehicles();
+    }
 }
