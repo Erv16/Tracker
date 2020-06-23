@@ -1,20 +1,21 @@
 package io.egen.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Readings {
 
     @Id
     private String readingId;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tireId")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "tires_tireId")
     private Tires tires;
 
     private String vin;
@@ -33,6 +34,15 @@ public class Readings {
     public Readings() {
         this.readingId = UUID.randomUUID().toString();
     }
+
+//    @JsonProperty("tires")
+//    private void mapTires(Map<String, Integer> tires) {
+//        this.tires = new Tires();
+//        this.tires.setFrontLeft(tires.get("frontLeft"));
+//        this.tires.setFrontRight(tires.get("frontRight"));
+//        this.tires.setRearLeft(tires.get("rearLeft"));
+//        this.tires.setRearRight(tires.get("rearRight"));
+//    }
 
     public String getVin() {
         return vin;

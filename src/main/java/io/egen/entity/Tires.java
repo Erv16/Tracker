@@ -8,13 +8,9 @@ import javax.persistence.OneToOne;
 import java.util.UUID;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Tires {
     @Id
     private String tireId;
-
-    @OneToOne(mappedBy = "tires")
-    private Readings readings;
 
     private int frontLeft;
     private int frontRight;
@@ -31,14 +27,6 @@ public class Tires {
 
     public void setTireId(String tireId) {
         this.tireId = tireId;
-    }
-
-    public Readings getReadings() {
-        return readings;
-    }
-
-    public void setReadings(Readings readings) {
-        this.readings = readings;
     }
 
     public int getFrontLeft() {
@@ -77,7 +65,6 @@ public class Tires {
     public String toString() {
         return "Tires{" +
                 "tireId='" + tireId + '\'' +
-                ", readings=" + readings +
                 ", frontLeft=" + frontLeft +
                 ", frontRight=" + frontRight +
                 ", rearLeft=" + rearLeft +
