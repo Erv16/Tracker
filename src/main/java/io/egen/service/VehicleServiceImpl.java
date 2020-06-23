@@ -18,7 +18,7 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional
-    public List<Vehicle> saveVehicle(List<Vehicle> vehicles) {
+    public List<Vehicle> saveVehicles(List<Vehicle> vehicles) {
         vehicles.forEach(vehicle -> vehicleRepository.save(vehicle));
         return vehicles;
     }

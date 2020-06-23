@@ -16,8 +16,8 @@ public class VehicleController {
     private VehicleService vehicleService;
 
     @PutMapping
-    public List<Vehicle> saveVehicle(@RequestBody List<Vehicle> vehicles) {
-        return vehicleService.saveVehicle(vehicles);
+    public List<Vehicle> saveVehicles(@RequestBody List<Vehicle> vehicles) {
+        return vehicleService.saveVehicles(vehicles);
     }
 
     @GetMapping

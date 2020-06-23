@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface VehicleService {
 
-    List<Vehicle> saveVehicle(List<Vehicle> vehicles);
+    List<Vehicle> saveVehicles(List<Vehicle> vehicles);
 
     List<Vehicle> getVehicles();
 
