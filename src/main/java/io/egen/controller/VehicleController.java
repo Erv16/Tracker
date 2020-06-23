@@ -29,4 +29,9 @@ public class VehicleController {
     public Vehicle getVehicle(@PathVariable("vehicleId") String vid) {
         return vehicleService.getVehicle(vid);
     }
+
+    @GetMapping(value = "/location/{vehicleId}")
+    public List<String> getGeoLocations(@PathVariable("vehicleId") String vin) {
+        return vehicleService.getGeoLocation(vin);
+    }
 }

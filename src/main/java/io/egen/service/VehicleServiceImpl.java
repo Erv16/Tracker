@@ -1,20 +1,24 @@
 package io.egen.service;
 
+import io.egen.entity.Readings;
 import io.egen.entity.Vehicle;
+import io.egen.repository.ReadingsRepository;
 import io.egen.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.util.*;
 
 @Service
 public class VehicleServiceImpl implements VehicleService {
 
     @Autowired
     private VehicleRepository vehicleRepository;
+
+    @Autowired
+    private ReadingsRepository readingsRepository;
 
     @Override
     @Transactional
@@ -32,11 +36,29 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional(readOnly = true)
-    public Vehicle getVehicle(String vid) {
-        Optional<Vehicle> vehicle = vehicleRepository.findById(vid);
+    public Vehicle getVehicle(String vin) {
+        Optional<Vehicle> vehicle = vehicleRepository.findById(vin);
         if(!vehicle.isPresent()) {
-            throw new NoSuchElementException("Vehicle with id " + vid + " does not exist");
+            throw new NoSuchElementException("Vehicle with id " + vin + " does not exist");
         }
         return vehicle.get();
+    }
+
+    @Override
+    @Transactional
+    public List<String> getGeoLocation(String vin) {
+        Optional<Vehicle> vehicle = vehicleRepository.findById(vin);
+        if(!vehicle.isPresent()) {
+            throw new NoSuchElementException("Vehicle with id " + vin + " does not exist");
+        }
+        Timestamp timestamp = new Timestamp(new Date(System.currentTimeMillis() - 1800 * 1000).getTime());
+        List<Readings> readings = readingsRepository.getGeoLocationReading(vin, timestamp);
+        List<String> geoLocations = new ArrayList<>();
+        if(readings != null || readings.size() > 0) {
+            for(Readings reading: readings) {
+                geoLocations.add("Latitude: " + reading.getLatitude() + " and Longitude: " + reading.getLongitude() + " recorded at " + reading.getCreatedAt());
+            }
+        }
+        return geoLocations;
     }
 }

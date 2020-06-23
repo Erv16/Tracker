@@ -2,6 +2,7 @@ package io.egen.service;
 
 import io.egen.entity.Vehicle;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface VehicleService {
@@ -10,5 +11,7 @@ public interface VehicleService {
 
     List<Vehicle> getVehicles();
 
-    Vehicle getVehicle(String vid);
+    Vehicle getVehicle(String vin);
+
+    List<String> getGeoLocation(String vin);
 }
