@@ -7,8 +7,10 @@ import io.egen.repository.AlertsRepository;
 import io.egen.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -44,8 +46,8 @@ public class AlertServiceImpl implements AlertService{
         if (!vehicle.isPresent()) {
             throw new NoSuchElementException("Vehicle with id " + vehicle.get().getVin() + " does not exist");
         } else {
-            if (reading.getEngineRpm() > vehicle.get().getRedLineRpm()) {
-                rule = "Vehicle " + vehicle.get().getModel() + " Engine RPM <" + reading.getEngineRpm() + "> is greater than the Redline RPM <" + vehicle.get().getRedLineRpm() + "> specified";
+            if (reading.getEngineRpm() > vehicle.get().getRedlineRpm()) {
+                rule = "Vehicle " + vehicle.get().getModel() + " Engine RPM <" + reading.getEngineRpm() + "> is greater than the Redline RPM <" + vehicle.get().getRedlineRpm() + "> specified";
                 generateAlert(vehicle.get().getVin(), rule, "HIGH");
             }
             if (reading.getFuelVolume() < (0.10 * vehicle.get().getMaxFuelVolume())) {
@@ -77,5 +79,12 @@ public class AlertServiceImpl implements AlertService{
                 generateAlert(vehicle.get().getVin(), rule, "LOW");
             }
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Alerts> getHighAlerts() {
+        Timestamp timestamp = new Timestamp(new Date(System.currentTimeMillis() - 7200 * 1000).getTime());
+        return alertsRepository.getHighAlerts("HIGH", timestamp);
     }
 }

@@ -20,4 +20,9 @@ public class AlertsController {
     public List<Alerts> getAlerts() {
         return alertService.getAlerts();
     }
+
+    @GetMapping(value = "/high")
+    public List<Alerts> getHighAlerts() {
+        return alertService.getHighAlerts();
+    }
 }
