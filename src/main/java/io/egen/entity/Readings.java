@@ -35,15 +35,6 @@ public class Readings {
         this.readingId = UUID.randomUUID().toString();
     }
 
-//    @JsonProperty("tires")
-//    private void mapTires(Map<String, Integer> tires) {
-//        this.tires = new Tires();
-//        this.tires.setFrontLeft(tires.get("frontLeft"));
-//        this.tires.setFrontRight(tires.get("frontRight"));
-//        this.tires.setRearLeft(tires.get("rearLeft"));
-//        this.tires.setRearRight(tires.get("rearRight"));
-//    }
-
     public String getVin() {
         return vin;
     }

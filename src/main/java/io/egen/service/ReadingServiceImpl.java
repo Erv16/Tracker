@@ -1,5 +1,6 @@
 package io.egen.service;
 
+import io.egen.entity.Alerts;
 import io.egen.entity.Readings;
 import io.egen.entity.Tires;
 import io.egen.entity.Vehicle;
@@ -26,6 +27,9 @@ public class ReadingServiceImpl implements ReadingService{
     @Autowired
     private VehicleService vehicleService;
 
+    @Autowired
+    private AlertService alertService;
+
     @Override
     @Transactional
     public List<Readings> getReadings() {
@@ -41,6 +45,7 @@ public class ReadingServiceImpl implements ReadingService{
         }
         reading.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         Tires tires = reading.getTires();
+        alertService.ruleCheckToGenerateAlert(reading);
         tiresRepository.save(tires);
         return readingsRepository.save(reading);
     }
