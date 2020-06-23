@@ -4,6 +4,7 @@ import io.egen.entity.Alerts;
 import io.egen.entity.Readings;
 import io.egen.entity.Tires;
 import io.egen.entity.Vehicle;
+import io.egen.exception.VehicleNotFoundException;
 import io.egen.repository.ReadingsRepository;
 import io.egen.repository.TiresRpository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class ReadingServiceImpl implements ReadingService{
     public Readings saveReading(Readings reading) {
         Optional<Vehicle> vehicle = Optional.ofNullable(vehicleService.getVehicle(reading.getVin()));
         if(!vehicle.isPresent()) {
-            throw new NoSuchElementException("Vehicle with id " + vehicle.get().getVin() + " does not exist");
+            throw new VehicleNotFoundException("Vehicle with id " + vehicle.get().getVin() + " does not exist");
         }
         reading.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         Tires tires = reading.getTires();

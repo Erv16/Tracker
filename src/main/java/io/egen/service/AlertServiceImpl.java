@@ -3,6 +3,7 @@ package io.egen.service;
 import io.egen.entity.Alerts;
 import io.egen.entity.Readings;
 import io.egen.entity.Vehicle;
+import io.egen.exception.VehicleNotFoundException;
 import io.egen.repository.AlertsRepository;
 import io.egen.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class AlertServiceImpl implements AlertService{
         Optional<Vehicle> vehicle = vehicleRepository.findById(reading.getVin());
         String rule = "";
         if (!vehicle.isPresent()) {
-            throw new NoSuchElementException("Vehicle with id " + vehicle.get().getVin() + " does not exist");
+            throw new VehicleNotFoundException("Vehicle with id " + vehicle.get().getVin() + " does not exist");
         } else {
             if (reading.getEngineRpm() > vehicle.get().getRedlineRpm()) {
                 rule = "Vehicle " + vehicle.get().getModel() + " Engine RPM <" + reading.getEngineRpm() + "> is greater than the Redline RPM <" + vehicle.get().getRedlineRpm() + "> specified";

@@ -1,7 +1,11 @@
 package io.egen.service;
 
+import io.egen.entity.Alerts;
 import io.egen.entity.Readings;
 import io.egen.entity.Vehicle;
+import io.egen.exception.AlertNotFoundException;
+import io.egen.exception.VehicleNotFoundException;
+import io.egen.repository.AlertsRepository;
 import io.egen.repository.ReadingsRepository;
 import io.egen.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,9 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Autowired
     private ReadingsRepository readingsRepository;
+
+    @Autowired
+    private AlertsRepository alertsRepository;
 
     @Override
     @Transactional
@@ -39,7 +46,7 @@ public class VehicleServiceImpl implements VehicleService {
     public Vehicle getVehicle(String vin) {
         Optional<Vehicle> vehicle = vehicleRepository.findById(vin);
         if(!vehicle.isPresent()) {
-            throw new NoSuchElementException("Vehicle with id " + vin + " does not exist");
+            throw new VehicleNotFoundException("Vehicle with id " + vin + " does not exist");
         }
         return vehicle.get();
     }
@@ -49,7 +56,7 @@ public class VehicleServiceImpl implements VehicleService {
     public List<String> getGeoLocation(String vin) {
         Optional<Vehicle> vehicle = vehicleRepository.findById(vin);
         if(!vehicle.isPresent()) {
-            throw new NoSuchElementException("Vehicle with id " + vin + " does not exist");
+            throw new VehicleNotFoundException("Vehicle with id " + vin + " does not exist");
         }
         Timestamp timestamp = new Timestamp(new Date(System.currentTimeMillis() - 1800 * 1000).getTime());
         List<Readings> readings = readingsRepository.getGeoLocationReading(vin, timestamp);
@@ -60,5 +67,19 @@ public class VehicleServiceImpl implements VehicleService {
             }
         }
         return geoLocations;
+    }
+
+    @Override
+    @Transactional
+    public List<Alerts> getVehicleAlerts(String vin) {
+        Optional<Vehicle> vehicle = vehicleRepository.findById(vin);
+        if(!vehicle.isPresent()) {
+            throw new VehicleNotFoundException("Vehicle with id " + vin + " does not exist");
+        }
+        List<Alerts> alerts = alertsRepository.findAllByVin(vin);
+        if(alerts == null || alerts.size() == 0) {
+            throw new AlertNotFoundException("Alerts for vehicle with id " + vin + " does not exist");
+        }
+        return alerts;
     }
 }

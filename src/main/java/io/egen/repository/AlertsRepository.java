@@ -12,4 +12,6 @@ public interface AlertsRepository extends CrudRepository<Alerts, String> {
 
     @Query("SELECT al FROM Alerts al WHERE al.priority = :priority AND al.createdAt >= :timestamp ORDER BY al.createdAt DESC")
     List<Alerts> getHighAlerts(@Param("priority") String priority, @Param("timestamp")Timestamp timestamp);
+
+    List<Alerts> findAllByVin(String vin);
 }

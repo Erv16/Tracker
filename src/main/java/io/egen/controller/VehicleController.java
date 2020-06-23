@@ -1,5 +1,6 @@
 package io.egen.controller;
 
+import io.egen.entity.Alerts;
 import io.egen.entity.Vehicle;
 import io.egen.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,10 @@ public class VehicleController {
     @GetMapping(value = "/location/{vehicleId}")
     public List<String> getGeoLocations(@PathVariable("vehicleId") String vin) {
         return vehicleService.getGeoLocation(vin);
+    }
+
+    @GetMapping(value = "/alerts/{vehicleId}")
+    public List<Alerts> getVehicleAlerts(@PathVariable("vehicleId") String vin) {
+        return vehicleService.getVehicleAlerts(vin);
     }
 }

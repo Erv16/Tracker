@@ -1,5 +1,6 @@
 package io.egen.service;
 
+import io.egen.entity.Alerts;
 import io.egen.entity.Vehicle;
 
 import java.sql.Timestamp;
@@ -14,4 +15,6 @@ public interface VehicleService {
     Vehicle getVehicle(String vin);
 
     List<String> getGeoLocation(String vin);
+
+    List<Alerts> getVehicleAlerts(String vin);
 }
