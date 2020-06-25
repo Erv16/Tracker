@@ -33,7 +33,7 @@ public class VehicleController {
     }
 
     @GetMapping(value = "/location/{vehicleId}")
-    public List<Map<String, String>> getGeoLocations(@PathVariable("vehicleId") String vin) {
+    public List<Map<String,String>> getGeoLocations(@PathVariable("vehicleId") String vin) {
         return vehicleService.getGeoLocation(vin);
     }
 

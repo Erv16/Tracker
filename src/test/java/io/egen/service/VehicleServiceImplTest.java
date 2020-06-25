@@ -51,7 +51,7 @@ public class VehicleServiceImplTest {
 
     private List<Alerts> alertsList;
 
-    private List<Object[]> geoLocation;
+    private List<Object[]> geoLocation = new ArrayList<>();
 
     @Before
     public void setup() {
@@ -86,6 +86,7 @@ public class VehicleServiceImplTest {
         tires.setFrontLeft(31);
 
         reading.setTires(tires);
+
 
         Object location[] = new Object[2];
         location[0] = 41.803194;

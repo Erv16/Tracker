@@ -2,15 +2,16 @@ package io.egen.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
 public class Tires {
     @Id
     private String tireId;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "tires")
+    private Readings readings;
 
     private int frontLeft;
     private int frontRight;

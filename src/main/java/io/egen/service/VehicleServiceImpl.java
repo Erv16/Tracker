@@ -62,9 +62,9 @@ public class VehicleServiceImpl implements VehicleService {
         List<Object[]> readings = readingsRepository.getGeoLocationReading(vin, timestamp);
         Map<String, String> map = null;
         List<Map<String, String>> geoLocations = new ArrayList<>();
-        if(readings != null || readings.size() > 0) {
+        if(readings != null || !readings.isEmpty()) {
             for(Object[] reading: readings) {
-                map = new HashMap<>();
+                map = new HashMap<String, String>();
                 map.put("Latitude", reading[0].toString());
                 map.put("Longitude", reading[1].toString());
                 geoLocations.add(map);
