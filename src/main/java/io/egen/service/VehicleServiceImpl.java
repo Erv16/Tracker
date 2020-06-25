@@ -53,17 +53,21 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional
-    public List<String> getGeoLocation(String vin) {
+    public List<Map<String, String>> getGeoLocation(String vin) {
         Optional<Vehicle> vehicle = vehicleRepository.findById(vin);
         if(!vehicle.isPresent()) {
             throw new VehicleNotFoundException("Vehicle with id " + vin + " does not exist");
         }
         Timestamp timestamp = new Timestamp(new Date(System.currentTimeMillis() - 1800 * 1000).getTime());
-        List<Readings> readings = readingsRepository.getGeoLocationReading(vin, timestamp);
-        List<String> geoLocations = new ArrayList<>();
+        List<Object[]> readings = readingsRepository.getGeoLocationReading(vin, timestamp);
+        Map<String, String> map = null;
+        List<Map<String, String>> geoLocations = new ArrayList<>();
         if(readings != null || readings.size() > 0) {
-            for(Readings reading: readings) {
-                geoLocations.add("Latitude: " + reading.getLatitude() + " and Longitude: " + reading.getLongitude() + " recorded at " + reading.getCreatedAt());
+            for(Object[] reading: readings) {
+                map = new HashMap<>();
+                map.put("Latitude", reading[0].toString());
+                map.put("Longitude", reading[1].toString());
+                geoLocations.add(map);
             }
         }
         return geoLocations;

@@ -51,7 +51,7 @@ public class VehicleServiceImplTest {
 
     private List<Alerts> alertsList;
 
-    private List<Readings> geoLocation;
+    private List<Object[]> geoLocation;
 
     @Before
     public void setup() {
@@ -87,6 +87,18 @@ public class VehicleServiceImplTest {
 
         reading.setTires(tires);
 
+//        Map<String, String> map = new HashMap<>();
+//        geoLocation = new ArrayList<>();
+//        map.put("Latitude", String.valueOf(reading.getLatitude());
+//        map.put("Longitude", String.valueOf(reading.getLongitude());
+//        geoLocation.add(map);
+
+        Object location[] = new Object[2];
+        location[0] = 41.803194;
+        location[1] = -88.144406;
+        geoLocation.add(location);
+
+
         readingsList = Collections.singletonList(reading);
 
         Alerts alert = new Alerts();
@@ -97,8 +109,6 @@ public class VehicleServiceImplTest {
 
         alertsList = Collections.singletonList(alert);
 
-        //geoLocation.add(readingsList.get(0));
-
         Mockito.when(vehicleRepository.findAll()).thenReturn(vehiclesList);
 
         Mockito.when(vehicleRepository.findById("1HGCR2F3XFA027534")).thenReturn(Optional.of(vehicle));
@@ -107,7 +117,7 @@ public class VehicleServiceImplTest {
 
         Mockito.when(alertsRepository.findAllByVin("1HGCR2F3XFA027534")).thenReturn(alertsList);
 
-        Mockito.when(readingsRepository.getGeoLocationReading("1HGCR2F3XFA027534", new Timestamp(new Date(System.currentTimeMillis() - 1800 * 1000).getTime()))).thenReturn(readingsList);
+        Mockito.when(readingsRepository.getGeoLocationReading("1HGCR2F3XFA027534", new Timestamp(new Date(System.currentTimeMillis() - 1800 * 1000).getTime()))).thenReturn(geoLocation);
     }
 
     @After

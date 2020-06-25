@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/vehicles")
@@ -32,7 +33,7 @@ public class VehicleController {
     }
 
     @GetMapping(value = "/location/{vehicleId}")
-    public List<String> getGeoLocations(@PathVariable("vehicleId") String vin) {
+    public List<Map<String, String>> getGeoLocations(@PathVariable("vehicleId") String vin) {
         return vehicleService.getGeoLocation(vin);
     }
 

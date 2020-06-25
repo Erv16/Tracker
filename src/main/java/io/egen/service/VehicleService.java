@@ -5,6 +5,7 @@ import io.egen.entity.Vehicle;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 public interface VehicleService {
 
@@ -14,7 +15,7 @@ public interface VehicleService {
 
     Vehicle getVehicle(String vin);
 
-    List<String> getGeoLocation(String vin);
+    List<Map<String, String>> getGeoLocation(String vin);
 
     List<Alerts> getVehicleAlerts(String vin);
 }
