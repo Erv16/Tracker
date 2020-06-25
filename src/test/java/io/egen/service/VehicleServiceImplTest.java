@@ -87,12 +87,6 @@ public class VehicleServiceImplTest {
 
         reading.setTires(tires);
 
-//        Map<String, String> map = new HashMap<>();
-//        geoLocation = new ArrayList<>();
-//        map.put("Latitude", String.valueOf(reading.getLatitude());
-//        map.put("Longitude", String.valueOf(reading.getLongitude());
-//        geoLocation.add(map);
-
         Object location[] = new Object[2];
         location[0] = 41.803194;
         location[1] = -88.144406;
